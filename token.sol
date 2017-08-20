@@ -15,7 +15,7 @@ contract token is ownable {
     address public state_storage;
     
     event Transfer(address indexed from, address indexed to, uint indexed value, bytes data);
-    event Donation(string indexed _donor, string indexed recipient);
+    event Donation(string _donor, string recipient);
 
     function transfer(address _to, uint _value, bytes _data)
     {
