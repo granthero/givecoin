@@ -17,7 +17,7 @@ Scope
   1. Token Supply:  Fixed at 50M (Non-mineable)
   2. Crowdsale Supply:  25M (50%)
   3. Max Cap = 25M
-  4. 1 Give Coin = $1USD
+  4. 1 GIVE Coin = $1.0 USD
   5. Purchase Methods = ETH
   6. Duration = 30 Days starting 10/2
 
