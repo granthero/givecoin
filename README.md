@@ -19,3 +19,13 @@ Scope
   6. Non-mineable
 - Blockchain event submission to the contract to monitor sales progress on our website
 - Security and technical consultancy between now and the ICO process
+
+# Testnet
+
+The whole contract system is already operationable. It is currently deployed on Rinkeby testnet:
+
+ICO contract: [0x4E11514fDd7ee8e5De72E8CB945b58680A7Cdf60](https://rinkeby.etherscan.io/address/0x4e11514fdd7ee8e5de72e8cb945b58680a7cdf60)
+
+Token contract: [0xB14518956207F7570e69334B9608e729F176f074](https://rinkeby.etherscan.io/address/0xb14518956207f7570e69334b9608e729f176f074)
+
+Database contract: [0x12f1f915f00a8b51f61b4220983bfa9fbf99755f](https://rinkeby.etherscan.io/address/0x12f1f915f00a8b51f61b4220983bfa9fbf99755f)
