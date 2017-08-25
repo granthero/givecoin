@@ -6,7 +6,6 @@ import './SafeMath.sol';
 contract token_database is ownable {
     using SafeMath for uint;
     
-    address public ICO_contract;
     address public token_contract;
     
     mapping(address => uint) public balances;
@@ -20,6 +19,11 @@ contract token_database is ownable {
     function name() constant returns (string) { return name; }
     function symbol() constant returns (string) { return symbol; }
     function decimals() constant returns (uint8) {return decimals;}
+    
+    function token_database()
+    {
+        balances[msg.sender] = 50000000 * decimals;
+    }
     
     function totalSupply() constant returns (uint256 _supply)
     {
@@ -41,39 +45,16 @@ contract token_database is ownable {
         balances[_owner] = balances[_owner].sub(_amount);
     }
     
-    /** ICO **/
-    
-    function ICO_give_token(address _destination, uint256 _amount) only_ICO
-    {
-        balances[_destination] = balances[_destination].add(_amount);
-        total_Supply = total_Supply.add(_amount);
-    }
-    
-    function ICO_shutdown() only_ICO
-    {
-        ICO_contract = 0x0;
-    }
-    
      /** DEBUGGING FUNCTIONS **/
      
     function configure(address _ICO_contract, address _token_contract) only_owner
     {
-        ICO_contract = _ICO_contract;
         token_contract = _token_contract;
     }
     
     modifier only_token_contract
     {
         if(msg.sender != token_contract)
-        {
-            throw;
-        }
-        _;
-    }
-    
-    modifier only_ICO
-    {
-        if(msg.sender != ICO_contract)
         {
             throw;
         }
