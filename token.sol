@@ -99,14 +99,4 @@ contract token is ownable {
     {
         state_storage = _state_storage;
     }
-    
-    modifier not_on_ICO
-    {
-        token_database db = token_database(state_storage);
-        if(db.ICO_contract() != 0x0)
-        {
-            throw;
-        }
-        _;
-    }
 }
