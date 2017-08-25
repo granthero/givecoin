@@ -3,6 +3,7 @@ pragma solidity ^0.4.11;
 import './SafeMath.sol';
 import './ownable.sol';
 import './token_database.sol';
+import './token.sol';
 
 contract ICO is ownable{
     using SafeMath for uint;
@@ -12,32 +13,41 @@ contract ICO is ownable{
     uint256 public start_timestamp = now;
     uint256 public end_timestamp = now + 28 days;
     uint256 public GiveCoins_per_ETH = 30000; // This means that 300 GC per 1 ETH
-    uint256 public max_cap = 500000000;
     address wirhdrawal_address = msg.sender;
     
-    token_database db;
+    mapping (address => bool) muted;
     
-    function() payable {
-        if(block.timestamp > end_timestamp || db.totalSupply() == max_cap)
+    token public GiveCoin_token;
+    
+    // Mute sender to prevent it from calling function recursively
+    function() payable mutex(msg.sender) {
+        if(block.timestamp > end_timestamp)
         {
             throw;
         }
         
-        
         uint256 reward = GiveCoins_per_ETH.mul( msg.value ) / 10**18;
-        if(db.totalSupply() + reward >= max_cap)
+        
+        if(reward > GiveCoin_token.balanceOf(this))
         {
-            reward = max_cap - db.totalSupply();
-            msg.sender.send( msg.value.sub( reward.mul( 10**18 ) / GiveCoins_per_ETH ) );
+            uint256 _refund = (reward - GiveCoin_token.balanceOf(this)).mul(10**18) / GiveCoins_per_ETH;
+            msg.sender.send(_refund);
+            reward = GiveCoin_token.balanceOf(this);
         }
-        db.ICO_give_token(msg.sender, reward);
+        
+        
+        GiveCoin_token.transfer(msg.sender, reward);
         Buy(msg.sender, msg.value, reward);
         
     }
     
+    function tokenFallback(address _addr, uint256 _amount, bytes _data)
+    {
+        require(msg.sender == address(GiveCoin_token));
+    }
+    
     function closeICO() only_owner
     {
-        db.ICO_shutdown();
         suicide(owner);
     }
     
@@ -58,9 +68,9 @@ contract ICO is ownable{
         end_timestamp = _end_timestamp;
     }
     
-    function change_max_cap(uint256 _max_cap) only_owner
+    function withdraw_tokens(uint256 _amount) only_owner
     {
-        max_cap = _max_cap;
+        GiveCoin_token.transfer(owner, _amount);
     }
     
     function change_wirhdrawal_address(address _wirhdrawal_address) only_owner
@@ -68,10 +78,22 @@ contract ICO is ownable{
         wirhdrawal_address = _wirhdrawal_address;
     }
      
-    function configure(address _token_database, uint _start_timestamp) only_owner
+    function configure(address _token_contract, uint _start_timestamp, uint _end_timestamp) only_owner
     {
-        db = token_database(_token_database);
+        GiveCoin_token = token(_token_contract);
         start_timestamp = _start_timestamp;
-        end_timestamp = start_timestamp + 28 days;
+        end_timestamp = _end_timestamp;
+    }
+    
+    // Mutex modifier to prevent re-entries
+    modifier mutex(address _target)
+    {
+        if( muted[_target] )
+        {
+            throw;
+        }
+        muted[_target] = true;
+        _;
+        muted[_target] = false;
     }
 }
