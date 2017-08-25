@@ -19,7 +19,10 @@ Scope
   3. Max Cap = 25M
   4. 1 GIVE Coin = $1.0 USD
   5. Purchase Methods = ETH
-  6. Duration = 30 Days starting 10/2
+  6. Minimum Contribution Amount = 0.01 ETH
+  7. Duration = 30 Days starting 10/2
+  
+-  For more details regarding the GIVE Coin including the crowdsale, utility, and ecosystem, please view the whitepaper located here:  https://docs.google.com/document/d/1CIwDHv7pg97ZBLzup-Xq84GSAp3Dx4HEVNj0j5CrnXs/edit?usp=sharing
 
 # Testnet
 
