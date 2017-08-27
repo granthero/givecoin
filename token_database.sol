@@ -48,7 +48,7 @@ contract token_database is ownable {
     
      /** DEBUGGING FUNCTIONS **/
      
-    function configure(address _ICO_contract, address _token_contract) only_owner
+    function configure(address _token_contract) only_owner
     {
         token_contract = _token_contract;
     }
