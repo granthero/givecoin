@@ -32,7 +32,7 @@ Crowdsale contract: [0x3bc951926113a06269d88c5e2d1c27fd118c35f3](https://rinkeby
 
 Token contract: [0x20d7e07c51e2ad3eb5529f7ec047ec895568dcda](https://rinkeby.etherscan.io/address/0x20d7e07c51e2ad3eb5529f7ec047ec895568dcda)
 
-Database contract: [0xc15edcbe20cc98779609e68680e4422198b4081e](https://rinkeby.etherscan.io/address/0xc15edcbe20cc98779609e68680e4422198b4081e)
+Database contract: [0x7048f39441c7f0b5f96f3e67ce4c5f99867518d4](https://rinkeby.etherscan.io/address/0x7048f39441c7f0b5f96f3e67ce4c5f99867518d4)
 
 ## Getting Started
 
