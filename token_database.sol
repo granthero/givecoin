@@ -48,11 +48,6 @@ contract token_database is ownable {
     
      /** DEBUGGING FUNCTIONS **/
      
-    function burn(uint256 _amount) only_token_contract
-    {
-        total_supply.sub(_amount);
-    }
-     
     function configure(address _ICO_contract, address _token_contract) only_owner
     {
         token_contract = _token_contract;
