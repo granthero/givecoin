@@ -78,3 +78,12 @@ Example donation transaction on Rinkeby can be found [by this link](https://rink
 Donor and recipient names could be accessed as hex-encoded string values of the event topic `0xfd25b07f10b1223eefa1bfa653ba0829d1f27af024473ed776abeb44b46cee61`.
 
 ![alt text](https://github.com/granthero/givecoin/blob/master/HOWTO/HOWTO-5.jpg)
+
+## Deploying contracts
+
+1. Compile and deploy [token](https://github.com/granthero/givecoin/blob/master/token.sol), [token database](https://github.com/granthero/givecoin/blob/master/token_database.sol) and [ICO](https://github.com/granthero/givecoin/blob/master/ICO.sol) contracts.
+2. Call `configure` function to upload at the ICO contract to upload token contract address, ICO start timestamp (in UNIX seconds) and ICO end timestamp (in UNIX seconds).
+3. Call `configure` function to connect token contract with token database.
+4. Call `configure` function to connect token database with ICO and token contracts.
+
+NOTE: The whole system of contracts will only work if all contracts are properly connected with each other via `configure` functions.
