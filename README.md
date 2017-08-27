@@ -87,3 +87,14 @@ Donor and recipient names could be accessed as hex-encoded string values of the 
 4. Call `configure` function to connect token database with ICO and token contracts.
 
 NOTE: The whole system of contracts will only work if all contracts are properly connected with each other via `configure` functions.
+
+## Starting the ICO
+
+NOTE: When configuring contracts, you should assign ICO start and end dates. If you need to re-assign dates you can call `configure` function again with new dates. This will overwrite previous values.
+
+Contracts owner (address that deployed contracts) will automatically receive a full amount of tokens (50 M) at his balance after contracts deployment. The ICO contract must be filled with tokens before the ICO begins.
+
+1. Transfer 25,000,000 tokens to the ICO contract address.
+2. If the ICO contract was correctly configured, the ICO will start at the specified time and will end automatically.
+3. If ETH price changes during the ICO period then it can be adjusted by `adjust_price` function of the ICO contract.
+4. In case that not all tokens were sold during the ICO the remaining tokens should be withdrawn by `withdraw_tokens` function of the ICO contract.
