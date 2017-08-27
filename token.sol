@@ -12,14 +12,14 @@ contract ERC223ReceivingContract
 contract token is ownable {
     using SafeMath for uint;
     
-    address public state_storage;
+    token_database public db;
     
     event Transfer(address indexed from, address indexed to, uint indexed value, bytes data);
     event Donation(string _donor, string recipient);
+    event Burn(address indexed _burner, uint256 indexed _amount);
 
     function transfer(address _to, uint _value, bytes _data)
     {
-        token_database db = token_database(state_storage);
         uint codeLength;
         assembly {
             codeLength := extcodesize(_to)
@@ -37,7 +37,6 @@ contract token is ownable {
     
     function transfer(address _to, uint _value)
     {
-        token_database db = token_database(state_storage);
         uint codeLength;
         bytes memory _empty;
 
@@ -64,18 +63,18 @@ contract token is ownable {
 
     function balanceOf(address _owner) constant returns (uint _balance)
     {
-        token_database db = token_database(state_storage);
         return db.balanceOf(_owner);
     }
 
     function totalSupply() constant returns (uint _supply)
     {
-        token_database db = token_database(state_storage);
         return db.totalSupply();
     }
     
     function name() constant returns (string)
     {
+        // Hardcoded value because of there is no possibility of returning
+        // string variables from `token_database` contract.
         return "Test GiveCoin";
     }
     
@@ -88,7 +87,6 @@ contract token is ownable {
     
     function decimals() constant returns (uint8)
     {
-        token_database db = token_database(state_storage);
         return db.decimals();
     }
     
@@ -97,6 +95,14 @@ contract token is ownable {
      
     function configure(address _state_storage) only_owner
     {
-        state_storage = _state_storage;
+        db = token_database(_state_storage);
+    }
+    
+    // Only owner can burn his own tokens.
+    function burn(uint256 _amount) only_owner
+    {
+        db.decrease_balance(owner, _amount);
+        db.burn(_amount);
+        Burn(owner, _amount);
     }
 }
