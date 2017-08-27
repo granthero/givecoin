@@ -13,7 +13,7 @@ contract ICO is ownable{
     uint256 public start_timestamp = now;
     uint256 public end_timestamp = now + 28 days;
     uint256 public GiveCoins_per_ETH = 30000; // This means that 300 GC per 1 ETH
-    address wirhdrawal_address = msg.sender;
+    address public wirhdrawal_address = msg.sender;
     
     mapping (address => bool) muted;
     
@@ -35,7 +35,7 @@ contract ICO is ownable{
             reward = GiveCoin_token.balanceOf(this);
         }
         
-        
+        wirhdrawal_address.send(this.balance);
         GiveCoin_token.transfer(msg.sender, reward);
         Buy(msg.sender, msg.value, reward);
         
