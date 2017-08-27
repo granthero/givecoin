@@ -21,7 +21,7 @@ contract ICO is ownable{
     
     // Mute sender to prevent it from calling function recursively
     function() payable mutex(msg.sender) {
-        if(block.timestamp > end_timestamp)
+        if(block.timestamp > end_timestamp || msg.value < 10000000000000000)
         {
             throw;
         }
