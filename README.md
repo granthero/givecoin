@@ -42,7 +42,7 @@ MyEtherWallet could be used to send the transaction:
 
 ![alt text](https://github.com/granthero/givecoin/blob/master/HOWTO/HOWTO-1.jpg)
 
-To watch the token on MyEtherWallet you need to add it to your token list. Press "Add Custom Token" button and insert token contract address (0x5a6a18008afaaacebb4c9b85d333de390f7cf4c2 on Rinkeby), token symbol (anything you like) and token decimals ( `2` ) then press "Save" button.
+To watch the token on MyEtherWallet you need to add it to your token list. Press "Add Custom Token" button and insert token contract address (0x20d7e07c51e2ad3eb5529f7ec047ec895568dcda on Rinkeby), token symbol (anything you like) and token decimals ( `2` ) then press "Save" button.
 
 ![alt text](https://github.com/granthero/givecoin/blob/master/HOWTO/HOWTO-2.jpg)
 
@@ -55,7 +55,7 @@ The `donate` function should be executed to submit an official donation.
 
 You can execute it via MyEtherWallet web interface. You need to access "Contracts" tab and insert token contract address and its ABI.
 
-Token contract address is `0x5a6a18008afaaacebb4c9b85d333de390f7cf4c2` on Rinkeby.
+Token contract address is ` 0x20d7e07c51e2ad3eb5529f7ec047ec895568dcda` on Rinkeby.
 Token contract ABI can be found [here](https://github.com/granthero/givecoin/blob/master/ABIs/token.abi).
 
 Copy and Paste token ABI and address as follows, then press "Access" button:
