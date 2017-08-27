@@ -10,7 +10,7 @@ contract token_database is ownable {
     
     mapping(address => uint) public balances;
     
-    uint256 public total_Supply;
+    uint256 public total_supply;
     
     string public name = "Test GiveCoin";
     string public symbol = "Test GC";
@@ -23,11 +23,12 @@ contract token_database is ownable {
     function token_database()
     {
         balances[msg.sender] = 50000000 * decimals;
+        total_supply = balances[msg.sender];
     }
     
     function totalSupply() constant returns (uint256 _supply)
     {
-        return total_Supply;
+        return total_supply;
     }
 
     function balanceOf(address _owner) constant returns (uint _balance)
@@ -46,6 +47,11 @@ contract token_database is ownable {
     }
     
      /** DEBUGGING FUNCTIONS **/
+     
+    function burn(uint256 _amount) only_token_contract
+    {
+        total_supply.sub(_amount);
+    }
      
     function configure(address _ICO_contract, address _token_contract) only_owner
     {
