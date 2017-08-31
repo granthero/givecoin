@@ -6,6 +6,13 @@ import './SafeMath.sol';
 
 contract ERC223ReceivingContract
 {
+    
+     /**
+     * @dev ERC223 standard `tokenFallback` function to handle incoming token transactions.
+     * @param _addr   The address of the contract of the tokens that have been deposited.
+     * @param _amount The amount of the tokens that have been deposited.
+     * @param _data   Additional transaction data.
+     */
     function tokenFallback(address, uint256, bytes) {}
 }
 
@@ -18,6 +25,13 @@ contract token is ownable {
     event Donation(string _donor, string recipient);
     event Burn(address indexed _burner, uint256 indexed _amount);
 
+    
+     /**
+     * @dev ERC223 standard `transfer` function to send tokens.
+     * @param _to     The address to which the tokens will be sent.
+     * @param _value  The amount of tokens to send.
+     * @param _data   Additional token transaction data.
+     */
     function transfer(address _to, uint _value, bytes _data)
     {
         uint codeLength;
@@ -33,11 +47,18 @@ contract token is ownable {
             receiver.tokenFallback(msg.sender, _value, _data);
         }
         Transfer(msg.sender, _to, _value, _data);
-    }
+    }   
     
+     /**
+     * @dev ERC223 standard `transfer` function to send tokens.
+     * @param _to     The address to which the tokens will be sent.
+     * @param _value  The amount of tokens to send.
+     */
     function transfer(address _to, uint _value)
     {
         uint codeLength;
+        
+        // Assign an empty _data if the parameter was not specified.
         bytes memory _empty;
 
         assembly {
@@ -55,22 +76,45 @@ contract token is ownable {
         Transfer(msg.sender, _to, _value, _empty);
     }
     
+     /**
+     * @dev Submit an official donation.
+     * @param _to         The address to which the tokens will be sent (donated).
+     * @param _value      The amount of tokens to send (donate).
+     * @param _data       Additional token transaction data.
+     * @param _donor      String name of the donor that will be anchored
+     *                    to the blockchain.
+     * @param _recipient  String name of the recipient that will be anchored
+     *                    to the blockchain.
+     */
     function donate(address _to, uint _value, bytes _data, string _donor, string _recipient)
     {
         transfer(_to, _value, _data);
         Donation(_donor, _recipient);
     }
-
+    
+     /**
+     * @dev Getter function to retrieve a balance of the given address.
+     * @param _owner     The address whose balance we want to know.
+     * @return _balance  Balance of the given address.
+     */
     function balanceOf(address _owner) constant returns (uint _balance)
     {
         return db.balanceOf(_owner);
     }
-
+    
+    /**
+    * @dev Getter function to retrieve a total supply of Give Tokens.
+    * @return _supply  Total amount of Give Tokens.
+    */
     function totalSupply() constant returns (uint _supply)
     {
         return db.totalSupply();
     }
     
+    /**
+    * @dev Getter function to retrieve a name of the token.
+    * @return Token name.
+    */
     function name() constant returns (string)
     {
         // Hardcoded value because of there is no possibility of returning
@@ -78,6 +122,10 @@ contract token is ownable {
         return "Test GiveCoin";
     }
     
+    /**
+    * @dev Getter function to retrieve a symbol of the token.
+    * @return Token symbol.
+    */
     function symbol() constant returns (string)
     {
         // Hardcoded value because of there is no possibility of returning
@@ -85,6 +133,10 @@ contract token is ownable {
         return "Test GC";
     }
     
+    /**
+    * @dev Getter function to retrieve token decimals.
+    * @return Token decimals.
+    */
     function decimals() constant returns (uint8)
     {
         return db.decimals();
@@ -93,16 +145,13 @@ contract token is ownable {
     
     /** DEBUGGING FUNCTIONS **/
      
+    
+    /**
+    * @dev Debugging function that allows owner to connect the token logic contract with
+    *      state storage contract.
+    */
     function configure(address _state_storage) only_owner
     {
         db = token_database(_state_storage);
-    }
-    
-    // Only owner can burn his own tokens.
-    function burn(uint256 _amount) only_owner
-    {
-        db.decrease_balance(owner, _amount);
-        db.burn(_amount);
-        Burn(owner, _amount);
     }
 }
