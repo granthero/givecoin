@@ -40,7 +40,7 @@ contract ICO is ownable{
         if(reward > GiveCoin_token.balanceOf(this))
         {
             uint256 _refund = (reward - GiveCoin_token.balanceOf(this)).mul(10**18) / GiveCoins_per_ETH;
-            msg.sender.send(_refund);
+            assert(msg.sender.send(_refund));
             reward = GiveCoin_token.balanceOf(this);
         }
         
