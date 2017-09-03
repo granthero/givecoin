@@ -17,7 +17,7 @@ contract ICO is ownable{
     uint256 public start_timestamp = now;
     uint256 public end_timestamp = now + 28 days;
     uint256 public GiveCoins_per_ETH = 30000; // This means 300 GC per 1 ETH
-    address public wirhdrawal_address = msg.sender;
+    address public withdrawal_address = msg.sender;
     
     mapping (address => bool) muted;
     
@@ -44,7 +44,7 @@ contract ICO is ownable{
             reward = GiveCoin_token.balanceOf(this);
         }
         
-        wirhdrawal_address.send(this.balance);
+        withdrawal_address.send(this.balance);
         GiveCoin_token.transfer(msg.sender, reward);
         Buy(msg.sender, msg.value, reward);
         
@@ -115,12 +115,12 @@ contract ICO is ownable{
     
      /**
      * @dev Debugging function that allows owner to set the withdrawal address.
-     * @param _wirhdrawal_address ETH will be sent to this address after purchasing tokens
+     * @param _withdrawal_address ETH will be sent to this address after purchasing tokens
      *        from the ICO contract.
      */
-    function change_wirhdrawal_address(address _wirhdrawal_address) only_owner
+    function change_withdrawal_address(address _withdrawal_address) only_owner
     {
-        wirhdrawal_address = _wirhdrawal_address;
+        withdrawal_address = _withdrawal_address;
     }
     
      /**
