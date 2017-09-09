@@ -18,6 +18,8 @@ contract ICO is ownable{
     uint256 public end_timestamp = now + 28 days;
     uint256 public GiveCoins_per_ETH = 30000; // This means 300 GC per 1 ETH
     address public withdrawal_address = msg.sender;
+    uint256 public min_deposit_amount = 10000000000000000;
+    bool public open = true;
     
     mapping (address => bool) muted;
     
@@ -29,8 +31,12 @@ contract ICO is ownable{
      */
     function() payable mutex(msg.sender) {
     // Mute sender to prevent it from calling function recursively
+        
+        require(open);
+        
+        uint _log_buy_amount = msg.value;
     
-        if(block.timestamp > end_timestamp || block.timestamp < start_timestamp || msg.value < 10000000000000000)
+        if(block.timestamp > end_timestamp || block.timestamp < start_timestamp || msg.value < min_deposit_amount)
         {
             throw;
         }
@@ -41,12 +47,14 @@ contract ICO is ownable{
         {
             uint256 _refund = (reward - GiveCoin_token.balanceOf(this)).mul(10**18) / GiveCoins_per_ETH;
             assert(msg.sender.send(_refund));
+            _log_buy_amount = _log_buy_amount.sub(_refund);
             reward = GiveCoin_token.balanceOf(this);
+            open = false;
         }
         
-        withdrawal_address.send(this.balance);
+        assert(withdrawal_address.send(this.balance));
         GiveCoin_token.transfer(msg.sender, reward);
-        Buy(msg.sender, msg.value, reward);
+        Buy(msg.sender, _log_buy_amount, reward);
         
     }
     
@@ -78,7 +86,7 @@ contract ICO is ownable{
      */
     function withdraw() only_owner
     {
-        owner.send(this.balance);
+        assert(owner.send(this.balance));
     }
     
      /**
@@ -121,6 +129,24 @@ contract ICO is ownable{
     function change_withdrawal_address(address _withdrawal_address) only_owner
     {
         withdrawal_address = _withdrawal_address;
+    }
+    
+     /**
+     * @dev Debugging function that allows owner to set the `open` status of the ICO contract.
+     * @param _open The value to be assigned to `open` contract status.
+     */
+    function adjust_ICO_open_status(bool _open) only_owner
+    {
+        open = _open;
+    }
+    
+     /**
+     * @dev Debugging function that allows owner to set the `_min_deposit_amount` manually.
+     * @param _min_deposit_amount The value to be assigned to `_min_deposit_amount` variable.
+     */
+    function adjust_min_deposit_amount(uint256 _min_deposit_amount) only_owner
+    {
+        min_deposit_amount = _min_deposit_amount;
     }
     
      /**
