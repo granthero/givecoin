@@ -6,13 +6,6 @@ import './SafeMath.sol';
 
 contract ERC223ReceivingContract
 {
-    
-     /**
-     * @dev ERC223 standard `tokenFallback` function to handle incoming token transactions.
-     * @param _addr   The address of the contract of the tokens that have been deposited.
-     * @param _amount The amount of the tokens that have been deposited.
-     * @param _data   Additional transaction data.
-     */
     function tokenFallback(address, uint256, bytes) {}
 }
 
@@ -73,6 +66,23 @@ contract token is ownable {
             
             receiver.tokenFallback(msg.sender, _value, _empty);
         }
+        Transfer(msg.sender, _to, _value, _empty);
+    }   
+    
+     /**
+     * @dev ERC20-compatible function that allows user to send tokens without calling
+     *      transaction handler function at the receiver.
+     *      ! WARNING ! 
+     *      This may result in loss of fuds! Use with caution!
+     *      Do not send tokens into contract that is not designed to receive tokens!
+     * @param _to     The address to which the tokens will be sent.
+     * @param _value  The amount of tokens to send.
+     */
+    function ERC20_transfer(address _to, uint _value)
+    {
+        bytes memory _empty;
+        db.increase_balance(_to, _value);
+        db.decrease_balance(msg.sender, _value);
         Transfer(msg.sender, _to, _value, _empty);
     }
     
