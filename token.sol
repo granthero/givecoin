@@ -24,6 +24,35 @@ contract token is ownable {
      * @param _to     The address to which the tokens will be sent.
      * @param _value  The amount of tokens to send.
      * @param _data   Additional token transaction data.
+     * @param _custom_fallback The name of the handler function to be called in the recipient.
+     *        This is necessary in order to allow transactions to work properly
+     *        even if the recipient does not implement the standard `tokenFallback` function
+     */
+    function transfer(address _to, uint _value, bytes _data, string _custom_fallback)
+    {
+        uint codeLength;
+        assembly {
+            codeLength := extcodesize(_to)
+        }
+        
+        db.increase_balance(_to, _value);
+        db.decrease_balance(msg.sender, _value);
+
+        if(codeLength>0) {
+            if(!_to.call.value(0)(bytes4(sha3(_custom_fallback)), msg.sender, value, data))
+            {
+                revert();
+            }
+        }
+        Transfer(msg.sender, _to, _value, _data);
+    }   
+
+    
+     /**
+     * @dev ERC223 standard `transfer` function to send tokens.
+     * @param _to     The address to which the tokens will be sent.
+     * @param _value  The amount of tokens to send.
+     * @param _data   Additional token transaction data.
      */
     function transfer(address _to, uint _value, bytes _data)
     {
