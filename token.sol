@@ -13,10 +13,10 @@ contract token is ownable {
     using SafeMath for uint;
     
     token_database public db;
+    bool public suspended = false; // disable transfers.
     
     event Transfer(address indexed from, address indexed to, uint indexed value, bytes data);
     event Donation(string _donor, string recipient);
-    event Burn(address indexed _burner, uint256 indexed _amount);
 
     
      /**
@@ -26,9 +26,9 @@ contract token is ownable {
      * @param _data   Additional token transaction data.
      * @param _custom_fallback The name of the handler function to be called in the recipient.
      *        This is necessary in order to allow transactions to work properly
-     *        even if the recipient does not implement the standard `tokenFallback` function
+     *        even if the recipient does not implement the standard `tokenFallback` function.
      */
-    function transfer(address _to, uint _value, bytes _data, string _custom_fallback)
+    function transfer(address _to, uint _value, bytes _data, string _custom_fallback) suspendable
     {
         uint codeLength;
         assembly {
@@ -39,7 +39,7 @@ contract token is ownable {
         db.decrease_balance(msg.sender, _value);
 
         if(codeLength>0) {
-            if(!_to.call.value(0)(bytes4(sha3(_custom_fallback)), msg.sender, value, data))
+            if(!_to.call.value(0)(bytes4(sha3(_custom_fallback)), msg.sender, _value, _data))
             {
                 revert();
             }
@@ -54,7 +54,7 @@ contract token is ownable {
      * @param _value  The amount of tokens to send.
      * @param _data   Additional token transaction data.
      */
-    function transfer(address _to, uint _value, bytes _data)
+    function transfer(address _to, uint _value, bytes _data) suspendable
     {
         uint codeLength;
         assembly {
@@ -76,7 +76,7 @@ contract token is ownable {
      * @param _to     The address to which the tokens will be sent.
      * @param _value  The amount of tokens to send.
      */
-    function transfer(address _to, uint _value)
+    function transfer(address _to, uint _value) suspendable
     {
         uint codeLength;
         
@@ -107,7 +107,7 @@ contract token is ownable {
      * @param _to     The address to which the tokens will be sent.
      * @param _value  The amount of tokens to send.
      */
-    function ERC20_transfer(address _to, uint _value)
+    function ERC20_transfer(address _to, uint _value) suspendable
     {
         bytes memory _empty;
         db.increase_balance(_to, _value);
@@ -125,7 +125,7 @@ contract token is ownable {
      * @param _recipient  String name of the recipient that will be anchored
      *                    to the blockchain.
      */
-    function donate(address _to, uint _value, bytes _data, string _donor, string _recipient)
+    function donate(address _to, uint _value, bytes _data, string _donor, string _recipient) suspendable
     {
         transfer(_to, _value, _data);
         Donation(_donor, _recipient);
@@ -188,9 +188,26 @@ contract token is ownable {
     /**
     * @dev Debugging function that allows owner to connect the token logic contract with
     *      state storage contract.
+    * @param _state_storage Address of the state storage contract.
     */
     function configure(address _state_storage) only_owner
     {
         db = token_database(_state_storage);
+    }
+     
+    
+    /**
+    * @dev Debugging function that allows owner to freeze the contract.
+    * @param _suspend_status `true` to freeze the contract or `false` to defreeze it.
+    */
+    function suspend(bool _suspend_status) only_owner
+    {
+        suspended = _suspend_status;
+    }
+    
+    modifier suspendable
+    {
+        if(suspended) revert();
+        _;
     }
 }
