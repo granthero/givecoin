@@ -36,7 +36,7 @@ Database contract: [0xd05835b3e8a136661487fe1fd8bcbbb921eb3f78](https://rinkeby.
 
 ## Getting Started
 
-To contribute to Give Coin crowdsale you should just send ETH into the crowdsale contract address. 100 000 GAS is required.
+To contribute to Give Coin crowdsale you should just send ETH into the crowdsale contract address. 120 000 GAS is required.
 
 MyEtherWallet could be used to send the transaction:
 
