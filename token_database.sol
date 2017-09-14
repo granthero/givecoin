@@ -12,9 +12,9 @@ contract token_database is ownable {
     
     uint256 public total_supply;
     
-    string public name = "Test GiveCoin";
-    string public symbol = "Test GC";
-    uint8 public decimals = 2;
+    string public name = "GiveCoin";
+    string public symbol = "GIVE";
+    uint8 public decimals = 10;
     
     function name() constant returns (string) { return name; }
     function symbol() constant returns (string) { return symbol; }
