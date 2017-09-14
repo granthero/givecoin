@@ -28,11 +28,11 @@ Scope
 
 The whole contract system is already operationable. It is currently deployed on Rinkeby testnet:
 
-Crowdsale contract: [0x3bc951926113a06269d88c5e2d1c27fd118c35f3](https://rinkeby.etherscan.io/address/0x3bc951926113a06269d88c5e2d1c27fd118c35f3)
+Crowdsale contract: [0x6eD1020f4521B78c064367F1B32C8e198f072320](https://rinkeby.etherscan.io/address/0x6eD1020f4521B78c064367F1B32C8e198f072320)
 
-Token contract: [0x20d7e07c51e2ad3eb5529f7ec047ec895568dcda](https://rinkeby.etherscan.io/address/0x20d7e07c51e2ad3eb5529f7ec047ec895568dcda)
+Token contract: [0x8a9ef205f2787fde2ac9bbbaa7149b9e0de0cc90](https://rinkeby.etherscan.io/address/0x8a9ef205f2787fde2ac9bbbaa7149b9e0de0cc90)
 
-Database contract: [0x4fCFefaca45001c62fbfF6daD48b51D6C3385F07](https://rinkeby.etherscan.io/address/0x4fCFefaca45001c62fbfF6daD48b51D6C3385F07)
+Database contract: [0xd05835b3e8a136661487fe1fd8bcbbb921eb3f78](https://rinkeby.etherscan.io/address/0xd05835b3e8a136661487fe1fd8bcbbb921eb3f78)
 
 ## Getting Started
 
