@@ -1,3 +1,4 @@
+
 pragma solidity ^0.4.11;
 
 import './SafeMath.sol';
@@ -16,9 +17,9 @@ contract ICO is ownable{
     
     uint256 public start_timestamp = now;
     uint256 public end_timestamp = now + 28 days;
-    uint256 public GiveCoins_per_ETH = 30000; // This means 300 GC per 1 ETH
+    uint256 public GiveCoins_per_ETH = 3000000000000; // This means 300 GC per 1 ETH (300*decimals)
     address public withdrawal_address = msg.sender;
-    uint256 public min_deposit_amount = 10000000000000000;
+    uint256 public min_deposit_amount = 10000000000000000; // 0.01 ETH in WEI
     bool public open = true;
     
     mapping (address => bool) muted;
