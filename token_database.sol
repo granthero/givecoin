@@ -25,7 +25,7 @@ contract token_database is ownable {
      */
     function token_database()
     {
-        balances[msg.sender] = 5000000000;
+        balances[msg.sender] = 50000000 * decimals;
         total_supply = balances[msg.sender];
     }
     
