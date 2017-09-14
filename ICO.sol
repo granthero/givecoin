@@ -16,7 +16,7 @@ contract ICO is ownable{
     event Buy(address indexed _owner, uint indexed _ETH, uint256 indexed _tokens);
     
     uint256 public start_timestamp = now;
-    uint256 public end_timestamp = now + 28 days;
+    uint256 public end_timestamp = now + 30 days;
     uint256 public GiveCoins_per_ETH = 3000000000000; // This means 300 GC per 1 ETH (300*decimals)
     address public withdrawal_address = msg.sender;
     uint256 public min_deposit_amount = 10000000000000000; // 0.01 ETH in WEI
