@@ -15,8 +15,8 @@ contract presale is ownable{
     
     event Buy(address indexed _owner, uint indexed _ETH, uint256 indexed _tokens);
     
-    uint256 public start_timestamp = 1506931200; // 10/2/2017 8:00 AM UTC
-    uint256 public end_timestamp = 1509436800; // 10/31/2017 8:00 AM UTC
+    uint256 public start_timestamp = 1506952800; // 10/2/2017 2:00 PM UTC
+    uint256 public end_timestamp = 1509458400; // 10/31/2017 2:00 PM UTC
     uint256 public GiveCoins_per_ETH = 3000000000000; // This means 300 GC per 1 ETH (300*10**decimals)
     address public withdrawal_address = msg.sender;
     uint256 public min_deposit_amount = 10000000000000000; // 0.01 ETH in WEI
