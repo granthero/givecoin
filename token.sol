@@ -158,7 +158,7 @@ contract token is ownable {
     {
         // Hardcoded value because of there is no possibility of returning
         // string variables from `token_database` contract.
-        return "Test GiveCoin";
+        return "Give Coin";
     }
     
     /**
@@ -169,7 +169,7 @@ contract token is ownable {
     {
         // Hardcoded value because of there is no possibility of returning
         // string variables from `token_database` contract.
-        return "Test GC";
+        return "GIVE";
     }
     
     /**
