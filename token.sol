@@ -102,7 +102,7 @@ contract token is ownable {
      * @dev ERC20-compatible function that allows user to send tokens without calling
      *      transaction handler function at the receiver.
      *      ! WARNING ! 
-     *      This may result in loss of fuds! Use with caution!
+     *      This may result in loss of funds! Use with caution!
      *      Do not send tokens into contract that is not designed to receive tokens!
      * @param _to     The address to which the tokens will be sent.
      * @param _value  The amount of tokens to send.
