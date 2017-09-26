@@ -12,7 +12,7 @@ contract token_database is ownable {
     
     uint256 public total_supply;
     
-    string public name = "GiveCoin";
+    string public name = "Give Coin";
     string public symbol = "GIVE";
     uint8 public decimals = 10;
     
