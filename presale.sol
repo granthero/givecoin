@@ -18,7 +18,7 @@ contract presale is ownable{
     uint256 public start_timestamp = 1506952800; // 10/2/2017 2:00 PM UTC
     uint256 public end_timestamp = 1507471200; // 10/8/2017 2:00 PM UTC
     uint256 public GiveCoins_per_ETH = 3750000000000; // This means 375 GIVE per 1 ETH (300*10**decimals)
-    address public withdrawal_address = msg.sender;
+    address public withdrawal_address = 0xdd67b3e206b0e86b5297b8eab118ca723c67d28c;
     uint256 public min_deposit_amount = 10000000000000000; // 0.01 ETH in WEI
     bool public open = true;
     
